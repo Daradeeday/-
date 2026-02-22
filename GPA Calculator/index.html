@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <!-- SEO Primary Meta Tags -->
+  <title>คำนวณเกรดเฉลี่ย — เครื่องคำนวณเกรดเฉลี่ย GPA ออนไลน์</title>
+  <meta name="title" content="Thai GPA Calculator — เครื่องคำนวณเกรดเฉลี่ย GPA ออนไลน์">
+  <meta name="description"
+    content="เครื่องคำนวณเกรดเฉลี่ย GPA สำหรับนักเรียนนักศึกษาไทย คำนวณ GPA รายเทอม, GPA สะสม (GPAX) และวางแผนเป้าหมายเกรดเทอมหน้า ใช้งานฟรี ไม่ต้องสมัครสมาชิก">
+  <meta name="keywords"
+    content="คำนวณเกรด, GPA Calculator, เกรดเฉลี่ย, คำนวณ GPA, เครื่องคำนวณเกรด, GPA สะสม, GPAX, เกรดมหาวิทยาลัย, เกรดโรงเรียน, Thai GPA">
+  <meta name="author" content="ddech production">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="Thai">
+  <meta name="theme-color" content="#2D9E8F">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Thai GPA Calculator — เครื่องคำนวณเกรดเฉลี่ย GPA ออนไลน์">
+  <meta property="og:description"
+    content="คำนวณเกรดเฉลี่ย GPA รายเทอม, GPA สะสม (GPAX) และวางแผนเป้าหมายเกรดเทอมหน้า สำหรับนักเรียนนักศึกษาไทย">
+  <meta property="og:site_name" content="Thai GPA Calculator">
+  <meta property="og:locale" content="th_TH">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Thai GPA Calculator — เครื่องคำนวณเกรดเฉลี่ย GPA ออนไลน์">
+  <meta name="twitter:description"
+    content="คำนวณเกรดเฉลี่ย GPA รายเทอม, GPA สะสม (GPAX) และวางแผนเป้าหมายเกรดเทอมหน้า สำหรับนักเรียนนักศึกษาไทย">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Thai GPA Calculator",
+    "description": "เครื่องคำนวณเกรดเฉลี่ย GPA สำหรับนักเรียนนักศึกษาไทย คำนวณ GPA รายเทอม, GPA สะสม และวางแผนเป้าหมายเกรดเทอมหน้า",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "THB"
+    },
+    "inLanguage": "th",
+    "audience": {
+      "@type": "EducationalAudience",
+      "educationalRole": "student"
+    }
+  }
+  </script>
+
+  <link rel="stylesheet" href="style.css">
+  <!-- html2pdf.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
+</head>
+
+<body>
+
+  <!-- ═══ Header ═══ -->
+  <header class="app-header">
+    <h1>Thai GPA</h1>
+
+  </header>
+
+  <main class="app-container">
+
+    <!-- ═══ Tabs ═══ -->
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="tab-semester">📝 คำนวณ GPA</button>
+      <button class="tab-btn" data-tab="tab-cumulative">📈 GPAX สะสม</button>
+      <button class="tab-btn" data-tab="tab-target">🎯 เป้าหมาย GPA</button>
+    </nav>
+
+    <!-- ═══ Developer Notice ═══ -->
+    <div class="dev-notice" id="devNotice">
+      <button class="dev-notice-close" id="closeNotice" aria-label="ปิด">✕</button>
+      <div class="dev-notice-header">
+        <span>📢 จากผู้พัฒนา</span>
+      </div>
+      <p>
+        เว็บไซต์นี้ถูกสร้างขึ้นเพื่อช่วยให้นักเรียนนักศึกษาไทยสามารถคำนวณเกรดเฉลี่ย (GPA)
+        ได้อย่างง่ายดายและรวดเร็ว โดยไม่ต้องสมัครสมาชิกหรือเสียค่าใช้จ่ายใดๆ
+        เราหวังว่าเครื่องมือนี้จะช่วยให้น้องๆ วางแผนการเรียนได้ดียิ่งขึ้น
+        — ทีมงาน ddech production
+      </p>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  TAB 1: SEMESTER GPA                    -->
+    <!-- ════════════════════════════════════════ -->
+    <section id="tab-semester" class="tab-content active">
+
+      <!-- PDF capture wrapper -->
+      <div id="pdfContent">
+
+        <!-- GPA Result Card -->
+        <div class="gpa-result-card">
+          <div class="gpa-label">เกรดเฉลี่ยประจำเทอม</div>
+          <div class="gpa-value" id="gpaValue">0.00</div>
+          <div class="gpa-credits" id="totalCredits">0 หน่วยกิต</div>
+          <div class="gpa-status" id="gpaStatus">—</div>
+        </div>
+
+        <!-- Subject List -->
+        <div class="card">
+          <div class="card-title">รายวิชา</div>
+          <div class="column-headers">
+            <span>ชื่อวิชา</span>
+            <span>หน่วยกิต</span>
+            <span>เกรด</span>
+            <span></span>
+          </div>
+          <div id="subjectList"></div>
+
+          <div class="btn-group">
+            <button class="btn btn-primary" id="addSubjectBtn">＋ เพิ่มวิชา</button>
+            <button class="btn btn-secondary" id="clearSubjectsBtn">🗑️ ล้าง</button>
+          </div>
+        </div>
+
+        <!-- Summary Table -->
+        <div class="card">
+          <div class="card-title">ตารางสรุป</div>
+          <table class="summary-table">
+            <thead>
+              <tr>
+                <th>วิชา</th>
+                <th>หน่วยกิต</th>
+                <th>เกรด</th>
+                <th>คะแนน</th>
+              </tr>
+            </thead>
+            <tbody id="summaryBody">
+              <tr>
+                <td colspan="4" class="no-data">ยังไม่มีข้อมูลรายวิชา</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="table-footer" id="summaryFooter" style="display:none;">
+            <span id="footerCredits">รวม 0 หน่วยกิต</span>
+            <span id="footerGPA">GPA 0.00</span>
+          </div>
+        </div>
+
+      </div><!-- /pdfContent -->
+
+      <!-- Action Bar -->
+      <div class="action-bar">
+        <button class="btn btn-secondary" id="exportPdfBtn">📄 Export PDF</button>
+      </div>
+
+    </section>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  TAB 2: CUMULATIVE GPA                  -->
+    <!-- ════════════════════════════════════════ -->
+    <section id="tab-cumulative" class="tab-content">
+
+      <!-- Cumulative GPA Result -->
+      <div class="gpa-result-card">
+        <div class="gpa-label">เกรดเฉลี่ยสะสม (GPAX)</div>
+        <div class="gpa-value" id="cumulativeGPAValue">0.00</div>
+        <div class="gpa-credits" id="cumulativeTotalCredits">0 หน่วยกิต</div>
+        <div class="gpa-status" id="cumulativeGPAStatus">—</div>
+      </div>
+
+      <!-- Semester List -->
+      <div class="card">
+        <div class="card-title">ข้อมูลแต่ละเทอม</div>
+        <div class="semester-headers">
+          <span>เทอม</span>
+          <span>GPA</span>
+          <span>หน่วยกิต</span>
+          <span></span>
+        </div>
+        <div id="semesterList"></div>
+
+        <div class="btn-group">
+          <button class="btn btn-primary btn-full" id="addSemesterBtn">＋ เพิ่มเทอม</button>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  TAB 3: TARGET GPA                      -->
+    <!-- ════════════════════════════════════════ -->
+    <section id="tab-target" class="tab-content">
+
+      <div class="card">
+        <div class="card-title">วางแผนเป้าหมาย GPA</div>
+
+        <div class="target-form" id="targetForm">
+          <div class="form-group">
+            <label for="targetCurrentGPA">GPA ปัจจุบัน</label>
+            <input type="number" id="targetCurrentGPA" placeholder="เช่น 3.25" min="0" max="4" step="0.01">
+          </div>
+          <div class="form-group">
+            <label for="targetCurrentCredits">หน่วยกิตสะสมปัจจุบัน</label>
+            <input type="number" id="targetCurrentCredits" placeholder="เช่น 60" min="0" step="1">
+          </div>
+          <div class="form-group">
+            <label for="targetDesiredGPA">GPA ที่ต้องการ</label>
+            <input type="number" id="targetDesiredGPA" placeholder="เช่น 3.50" min="0" max="4" step="0.01">
+          </div>
+          <div class="form-group">
+            <label for="targetNextCredits">หน่วยกิตเทอมหน้า</label>
+            <input type="number" id="targetNextCredits" placeholder="เช่น 18" min="0" step="1">
+          </div>
+        </div>
+
+        <div class="target-result">
+          <div class="result-label">GPA ที่ต้องทำได้เทอมหน้า</div>
+          <div class="result-value" id="targetResultValue">—</div>
+          <div class="result-note" id="targetResultNote">กรุณาใส่ข้อมูลให้ครบ</div>
+        </div>
+      </div>
+
+
+
+    </section>
+    <!-- ═══ Formula Toggle Button ═══ -->
+    <div style="text-align: center; margin-top: 20px;">
+      <button class="btn btn-secondary" id="toggleFormulaBtn" style="font-size: 0.8rem; padding: 8px 16px;">
+        📖 ดูสูตรคำนวณ
+      </button>
+    </div>
+
+    <!-- ═══ Formula Section (Hidden by default) ═══ -->
+    <section id="formulaSection" class="card hidden" style="margin-top: 16px;">
+      <div class="card-title">สูตรการคำนวณ</div>
+      <div class="formula-content">
+        <div class="formula-item">
+          <strong>1. GPA (เกรดเฉลี่ยประจำเทอม)</strong>
+          <p>GPA = ผลรวม (เกรด × หน่วยกิต) ÷ ผลรวมหน่วยกิตทั้งหมด</p>
+        </div>
+        <div class="formula-divider"></div>
+        <div class="formula-item">
+          <strong>2. GPAX (เกรดเฉลี่ยสะสม)</strong>
+          <p>GPAX = ผลรวม (GPA แต่ละเทอม × หน่วยกิตแต่ละเทอม) ÷ ผลรวมหน่วยกิตทั้งหมด</p>
+        </div>
+        <div class="formula-divider"></div>
+        <div class="formula-item">
+          <strong>3. เป้าหมาย GPA เทอมหน้า</strong>
+          <p>GPA ที่ต้องทำ = [ (GPA ที่ต้องการ × หน่วยกิตทั้งหมด) - (GPA ปัจจุบัน × หน่วยกิตปัจจุบัน) ] ÷
+            หน่วยกิตเทอมหน้า</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ═══ Footer ═══ -->
+  <footer class="app-footer">
+
+    <div class="footer-divider"></div>
+    <div class="footer-brand">สร้างโดย <strong>ddech production</strong></div>
+    <div class="footer-sub">Thai GPA Calculator © 2026</div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
+
+  <!-- App Script -->
+  <script type="module" src="js/app.js"></script>
+
+</body>
+
+</html>
