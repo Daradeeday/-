@@ -1,0 +1,808 @@
+/* ============================================
+   Thai GPA Calculator — Design System
+   iOS-inspired, Mobile-first, White + Light Blue
+   ============================================ */
+
+/* ---------- Google Font ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* ---------- CSS Custom Properties ---------- */
+:root {
+  /* Colors — warm, handcrafted palette */
+  --bg: #FAFAF7;
+  --bg-secondary: #F0EDE6;
+  --card: #FFFFFF;
+  --card-hover: #FDFCF9;
+  --accent: #2D9E8F;
+  --accent-light: #B8E0D8;
+  --accent-gradient: linear-gradient(150deg, #2D9E8F 0%, #4BB8A9 100%);
+  --accent-gradient-hover: linear-gradient(150deg, #258477 0%, #3EA898 100%);
+  --text-primary: #2C2C2C;
+  --text-secondary: #5F6368;
+  --text-tertiary: #9AA0A6;
+  --border: rgba(0, 0, 0, 0.06);
+  --border-input: rgba(0, 0, 0, 0.12);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.10);
+  --shadow-glow: 0 0 20px rgba(45, 158, 143, 0.08);
+  --danger: #D94F4F;
+  --danger-light: #FDEAEA;
+  --success: #3A9E6E;
+  --success-light: #E5F5ED;
+  --warning: #D4952B;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --transition: 0.25s ease;
+}
+
+
+/* ---------- Reset & Base ---------- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  transition: background var(--transition), color var(--transition);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------- App Container ---------- */
+.app-container {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0 16px 100px;
+}
+
+/* ---------- Header ---------- */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(250, 250, 247, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border);
+  transition: background var(--transition);
+}
+
+.app-header h1 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+}
+
+
+/* ---------- Tabs ---------- */
+.tabs {
+  display: flex;
+  gap: 4px;
+  padding: 20px 0 12px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tab-btn {
+  flex-shrink: 0;
+  padding: 10px 18px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: inherit;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  background: var(--card);
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+
+.tab-btn:hover {
+  background: var(--card-hover);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.tab-btn.active {
+  background: var(--accent-gradient);
+  color: #FFFFFF;
+  box-shadow: var(--shadow-md);
+}
+
+/* ---------- Tab Content ---------- */
+.tab-content {
+  display: none;
+  animation: fadeSlideIn 0.35s ease;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- Cards ---------- */
+.card {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  transition: all var(--transition);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.card-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+}
+
+/* ---------- GPA Result Card ---------- */
+.gpa-result-card {
+  background: var(--accent-gradient);
+  border-radius: var(--radius-xl);
+  padding: 28px 24px;
+  text-align: center;
+  color: #FFFFFF;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  position: relative;
+  overflow: hidden;
+}
+
+.gpa-result-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -30%;
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+}
+
+.gpa-result-card::after {
+  content: '';
+  position: absolute;
+  bottom: -40%;
+  left: -20%;
+  width: 150px;
+  height: 150px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+}
+
+.gpa-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  opacity: 0.9;
+  margin-bottom: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+.gpa-value {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  position: relative;
+  z-index: 1;
+}
+
+.gpa-credits {
+  font-size: 0.85rem;
+  opacity: 0.85;
+  margin-top: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.gpa-status {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-top: 10px;
+  position: relative;
+  z-index: 1;
+  backdrop-filter: blur(4px);
+}
+
+/* ---------- Subject Row ---------- */
+.subject-row {
+  display: grid;
+  grid-template-columns: 1fr 70px 90px 36px;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  animation: fadeSlideIn 0.3s ease;
+}
+
+.subject-row:last-of-type {
+  border-bottom: none;
+}
+
+.subject-row input,
+.subject-row select {
+  font-family: inherit;
+  font-size: 0.88rem;
+  padding: 10px 12px;
+  border: 1.5px solid var(--border-input);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text-primary);
+  transition: all var(--transition);
+  outline: none;
+  width: 100%;
+}
+
+.subject-row input:focus,
+.subject-row select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(74, 143, 231, 0.12);
+}
+
+.subject-row input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.subject-row select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+}
+
+.btn-remove {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: var(--danger-light);
+  color: var(--danger);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+  flex-shrink: 0;
+}
+
+.btn-remove:hover {
+  background: var(--danger);
+  color: #FFF;
+  transform: scale(1.1);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.88rem;
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  background: var(--accent-gradient);
+  color: #FFFFFF;
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover {
+  background: var(--accent-gradient-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1.5px solid var(--border-input);
+}
+
+.btn-secondary:hover {
+  background: var(--card-hover);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.btn-full {
+  width: 100%;
+}
+
+.btn-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.btn-group .btn {
+  flex: 1;
+}
+
+/* ---------- Summary Table ---------- */
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.summary-table thead th {
+  text-align: left;
+  padding: 10px 8px;
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 2px solid var(--border);
+}
+
+.summary-table tbody td {
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.summary-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.summary-table .grade-cell {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.summary-table .quality-cell {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 8px 0;
+  margin-top: 4px;
+  border-top: 2px solid var(--border);
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+/* ---------- Cumulative GPA Section ---------- */
+.semester-entry {
+  display: grid;
+  grid-template-columns: 1fr 90px 90px 36px;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  animation: fadeSlideIn 0.3s ease;
+}
+
+.semester-entry:last-of-type {
+  border-bottom: none;
+}
+
+.semester-entry input {
+  font-family: inherit;
+  font-size: 0.88rem;
+  padding: 10px 12px;
+  border: 1.5px solid var(--border-input);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text-primary);
+  transition: all var(--transition);
+  outline: none;
+  width: 100%;
+}
+
+.semester-entry input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(74, 143, 231, 0.12);
+}
+
+.semester-entry input::placeholder {
+  color: var(--text-tertiary);
+}
+
+/* ---------- Target GPA Section ---------- */
+.target-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.form-group input {
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border-input);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text-primary);
+  transition: all var(--transition);
+  outline: none;
+}
+
+.form-group input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(74, 143, 231, 0.12);
+}
+
+.form-group input::placeholder {
+  color: var(--text-tertiary);
+}
+
+/* ---------- Target Result ---------- */
+.target-result {
+  text-align: center;
+  padding: 20px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  margin-top: 10px;
+}
+
+.target-result .result-label {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.target-result .result-value {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+
+.target-result .result-note {
+  font-size: 0.78rem;
+  color: var(--text-tertiary);
+  margin-top: 8px;
+}
+
+.result-impossible {
+  color: var(--danger) !important;
+}
+
+.result-easy {
+  color: var(--success) !important;
+}
+
+/* ---------- Empty State ---------- */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-tertiary);
+}
+
+.empty-state .empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+}
+
+.empty-state p {
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+/* ---------- Export / Action Buttons ---------- */
+.action-bar {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  padding-top: 8px;
+}
+
+.action-bar .btn {
+  flex: 1;
+}
+
+/* ---------- Toast Notification ---------- */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  padding: 12px 24px;
+  background: var(--text-primary);
+  color: var(--bg);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-lg);
+  z-index: 9999;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* ---------- Responsive ---------- */
+@media (min-width: 600px) {
+  .app-container {
+    padding: 0 24px 100px;
+  }
+
+  .app-header {
+    padding: 18px 24px;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  }
+
+  .card {
+    padding: 24px;
+  }
+
+  .gpa-result-card {
+    padding: 36px 28px;
+  }
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-input);
+  border-radius: 999px;
+}
+
+/* ---------- Selection ---------- */
+::selection {
+  background: var(--accent);
+  color: #FFFFFF;
+}
+
+/* ---------- Column Headers ---------- */
+.column-headers {
+  display: grid;
+  grid-template-columns: 1fr 70px 90px 36px;
+  gap: 8px;
+  padding: 0 0 6px;
+  margin-bottom: 4px;
+}
+
+.column-headers span {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.semester-headers {
+  display: grid;
+  grid-template-columns: 1fr 90px 90px 36px;
+  gap: 8px;
+  padding: 0 0 6px;
+  margin-bottom: 4px;
+}
+
+.semester-headers span {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ---------- No-data row ---------- */
+.no-data {
+  text-align: center;
+  padding: 30px;
+  color: var(--text-tertiary);
+  font-size: 0.85rem;
+}
+
+/* ---------- Developer Notice Banner ---------- */
+.dev-notice {
+  background: #FFF8E7;
+  border: 1px solid #E8D5A3;
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  position: relative;
+  animation: fadeSlideIn 0.4s ease;
+}
+
+.dev-notice-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.dev-notice-header span {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #8B6914;
+}
+
+.dev-notice p {
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: #6B5210;
+  margin: 0;
+}
+
+.dev-notice-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #B8960F;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  opacity: 0.7;
+  transition: opacity var(--transition);
+}
+
+.dev-notice-close:hover {
+  opacity: 1;
+}
+
+.dev-notice.hidden {
+  display: none;
+}
+
+/* ---------- Footer ---------- */
+.app-footer {
+  text-align: center;
+  padding: 32px 20px 24px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.footer-brand {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  letter-spacing: 0.03em;
+}
+
+.footer-brand strong {
+  color: var(--text-secondary);
+  font-weight: 700;
+}
+
+.footer-sub {
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+  opacity: 0.7;
+}
+
+.footer-divider {
+  width: 40px;
+  height: 2px;
+  background: var(--border);
+  margin: 12px auto;
+  border-radius: 999px;
+}
+
+/* ---------- Formula Section ---------- */
+.formula-content {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.formula-item {
+  margin-bottom: 12px;
+}
+
+.formula-item strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--text-primary);
+}
+
+.formula-item p {
+  padding: 8px 12px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  font-family: monospace;
+  word-break: break-all;
+}
+
+.formula-divider {
+  height: 1px;
+  background: var(--border);
+  margin-bottom: 12px;
+}
+
+.hidden {
+  display: none !important;
+}
