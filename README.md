@@ -148,6 +148,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ---
 
 <p align="center">
-  Made with ❤️ for Thai students<br>
+  Made with ddechproduction for Thai students<br>
   Thai GPA Calculator © 2026
 </p>
+
