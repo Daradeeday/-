@@ -907,3 +907,195 @@ body {
     transform: translateY(0);
   }
 }
+
+/* ---------- SEO Content Article ---------- */
+.seo-content {
+  max-width: 520px;
+  margin: 28px auto 0;
+  padding: 0 4px 20px;
+}
+
+.seo-heading {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.seo-content h3 {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 20px 0 8px;
+}
+
+.seo-content p {
+  font-size: 0.84rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.seo-formula-box {
+  background: var(--bg-secondary);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  margin: 12px 0 16px;
+  font-family: monospace;
+  word-break: break-all;
+}
+
+.seo-table-wrapper {
+  overflow-x: auto;
+  margin: 12px 0 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+.seo-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.seo-table thead th {
+  text-align: left;
+  padding: 10px 12px;
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 2px solid var(--border);
+  background: var(--bg-secondary);
+}
+
+.seo-table tbody td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.seo-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.seo-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 16px;
+}
+
+.seo-list li {
+  font-size: 0.84rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  padding: 6px 0 6px 20px;
+  position: relative;
+}
+
+.seo-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.seo-cta-banner {
+  background: var(--accent-gradient);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  color: #FFFFFF;
+  text-align: center;
+  margin: 24px 0;
+  box-shadow: var(--shadow-md);
+}
+
+.seo-cta-banner strong {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.seo-cta-banner p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.82rem;
+  margin: 0;
+}
+
+.seo-update {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  text-align: center;
+  margin-top: 24px;
+  font-style: italic;
+}
+
+/* ---------- E-E-A-T Trust Section ---------- */
+.trust-section {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0 4px 24px;
+}
+
+.trust-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.trust-section p {
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+
+.trust-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.trust-badge {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ---------- Footer Links ---------- */
+.footer-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  font-size: 0.75rem;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity var(--transition);
+}
+
+.footer-links a:hover {
+  opacity: 0.7;
+}
+
+.footer-sep {
+  color: var(--text-tertiary);
+  font-size: 0.75rem;
+}
